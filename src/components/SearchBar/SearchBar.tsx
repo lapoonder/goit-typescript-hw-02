@@ -1,19 +1,24 @@
-import React from 'react';
+import { FormEvent } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useId } from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import css from './SearchBar.module.css';
 
+type Props = {
+  onSubmit: (searchText: string) => void;
+};
+
 const notify = () => toast('Please enter your text to search images!');
 
-function SearchForm({ onSubmit }) {
+function SearchForm({ onSubmit }: Props) {
   const inputFieldId = useId();
 
-  const handleSubmit = evt => {
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    const form = evt.target;
-    const searchText = form.elements.searchText.value;
+    const form = evt.currentTarget;
+    const searchText = (
+      form.elements.namedItem('searchText') as HTMLInputElement
+    )?.value;
     if (searchText.trim() === '') {
       notify();
       return;
@@ -54,9 +59,5 @@ function SearchForm({ onSubmit }) {
     </header>
   );
 }
-
-SearchForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
 
 export default SearchForm;

@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { StrictMode } from 'react';
 import { ModalProvider } from './hooks/ModalContext.jsx';
@@ -8,7 +7,7 @@ import App from './components/App/App.jsx';
 
 const rootElement = document.getElementById('root');
 if (rootElement) {
-  ReactDOM.createRoot(rootElement).render(
+  ReactDOM.createRoot(rootElement as HTMLElement).render(
     <StrictMode>
       <ModalProvider>
         <App />

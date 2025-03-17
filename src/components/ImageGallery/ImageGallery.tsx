@@ -1,10 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import css from './ImageGallery.module.css';
 import ImageCard from '../ImageCard/ImageCard';
 
-const ImageGallery = ({ images }) => {
+type Urls = {
+  small: string;
+  regular: string;
+};
+
+type User = {
+  name: string;
+};
+
+type Image = {
+  id: string;
+  urls: Urls;
+  description: string;
+  user: User;
+};
+
+type Props = {
+  images: Image[];
+};
+
+const ImageGallery = ({ images }: Props) => {
   return (
     <ul className={clsx(css.imageList)}>
       {images.map(image => {
@@ -21,10 +39,6 @@ const ImageGallery = ({ images }) => {
       })}
     </ul>
   );
-};
-
-ImageGallery.propTypes = {
-  images: PropTypes.array.isRequired,
 };
 
 export default ImageGallery;

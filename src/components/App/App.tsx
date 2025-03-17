@@ -1,30 +1,45 @@
-import React from 'react';
 import { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import css from './App.module.css';
-import { fetchImages } from '../../unsplash.js';
-import SearchBar from '../SearchBar/SearchBar.jsx';
+import { fetchImages } from '../../unsplash';
+import SearchBar from '../SearchBar/SearchBar';
 import { MagnifyingGlass } from 'react-loader-spinner';
-import ImageGallery from '../ImageGallery/ImageGallery.jsx';
-import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn.jsx';
-import ImageModal from '../ImageModal/ImageModal.jsx';
+import ImageGallery from '../ImageGallery/ImageGallery';
+import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn';
+import ImageModal from '../ImageModal/ImageModal';
+
+type Urls = {
+  small: string;
+  regular: string;
+};
+
+type User = {
+  name: string;
+};
+
+type Image = {
+  id: string;
+  urls: Urls;
+  description: string;
+  user: User;
+};
 
 function App() {
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<Image[]>([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [query, setQuery] = useState();
+  const [query, setQuery] = useState<string>('');
 
-  const handleSearch = searchText => {
+  const handleSearch = (searchText: string) => {
     setQuery(searchText);
     setImages([]); //очищаємо стан images перед новим запитом
     setTotalPages(0);
     setPage(1);
   };
 
-  const handleNextPage = nextPage => {
+  const handleNextPage = (nextPage: number) => {
     setPage(nextPage);
   };
 
